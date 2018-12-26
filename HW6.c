@@ -399,9 +399,9 @@ void clearDisplay(void)
 void IMU_ini(void)
 {
 	i2c_send(IMU_address, 0x6B, 0x01);
-	i2c_send(IMU_address, 0x1C, 0x08);
+	i2c_send(IMU_address, 0x1C, 0x08);//set Accel Full Scale Select: ±4g (01)
 	i2c_send(IMU_address, 0x1D, 0x05);
-	i2c_send(IMU_address, 0x1B, 0x08);
+	i2c_send(IMU_address, 0x1B, 0x08);//set Gyro Full Scale Select: +500dps (01)
 	i2c_send(IMU_address, 0x1A, 0x05);
 }
 
@@ -443,12 +443,11 @@ void ConversionData(void)
 	ax = (float)ax_d / 8192.0f;
 	ay = (float)ay_d / 8192.0f;
 	az = (float)az_d / 8192.0f;
-	gx = (float)gx_d / 131.0f;
-	gy = (float)gy_d / 131.0f;
-	gz = (float)gz_d / 131.0f;
+	gx = (float)gx_d / 65.536f;
+	gy = (float)gy_d / 65.536f;
+	gz = (float)gz_d / 65.536f;
 	mx = (float)mx_d * 0.5859f;
 	my = (float)my_d * 0.5859f;
 	mz = (float)mz_d * 0.5859f;
 	tp = (float)((tp_d - 21) / 333.87f) + 13;
-	
 }
